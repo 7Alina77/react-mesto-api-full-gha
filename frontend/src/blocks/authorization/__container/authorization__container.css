@@ -1,0 +1,12 @@
+.authorization__container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 250px;
+}
+
+@media screen and (max-width: 375px) {
+  .authorization__container{
+    height: 250px;
+  }
+}

@@ -1,0 +1,9 @@
+.elements__group {
+  padding: 17px 19px 17px 22px;
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 0 0 10px 10px;
+  align-items: center;
+  box-sizing: border-box;
+}

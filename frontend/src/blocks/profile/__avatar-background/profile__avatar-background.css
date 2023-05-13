@@ -1,0 +1,18 @@
+.profile__avatar-background {
+  position: relative;
+}
+
+.profile__avatar-background:hover::before {
+  cursor: pointer;
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  background-image: url(../../../images/edit-button.svg);
+  background-repeat: no-repeat;
+  background-size: 26px;
+  background-position: center;
+}

@@ -1,0 +1,13 @@
+.authorization__form {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 358px;
+}
+
+@media screen and (max-width:375px) {
+  .authorization__form{
+    width: 260px;
+  }
+}

@@ -1,0 +1,6 @@
+.elements__item {
+  max-width: 282px;
+  max-height: 361px;
+  box-sizing: border-box;
+  position: relative;
+}

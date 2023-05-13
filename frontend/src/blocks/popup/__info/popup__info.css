@@ -1,0 +1,8 @@
+.popup__info {
+  margin: 0;
+  padding:20px 0 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: black;
+}
