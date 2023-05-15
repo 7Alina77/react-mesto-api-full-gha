@@ -1,7 +1,9 @@
+import { BASE_URL } from "./auth";
+
 class Api {
-  constructor(url, token) {
+  constructor(url) {
     this._url = url;
-    this._token = token;
+    this._token = localStorage.getItem('token');
     this._headers = {
       authorization: this._token,
       'Content-Type': 'application/json'
@@ -98,4 +100,7 @@ class Api {
   }
 };
 
-export const api = new Api('https://mesto.nomoreparties.co/v1/cohort-59','96da67be-193e-4896-a588-48f1d36951e6');
+export const api = new Api({
+  BASE_URL
+})
+//export const api = new Api('https://mesto.nomoreparties.co/v1/cohort-59','96da67be-193e-4896-a588-48f1d36951e6');
