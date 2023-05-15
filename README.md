@@ -8,7 +8,7 @@
 
 ## Ссылки на проект
 
-IP-адрес 51.250.106.186
+IP 51.250.106.186
 
 Frontend https://alina-pr-mesto.nomoredomains.monster/
 
