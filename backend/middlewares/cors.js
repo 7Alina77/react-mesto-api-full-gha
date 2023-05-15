@@ -1,8 +1,10 @@
 const allowedCors = [
+  'http://api.alina-pr-mesto.nomoredomains.monster/',
+  'https://api.alina-pr-mesto.nomoredomains.monster/',
   'http://alina-pr-mesto.nomoredomains.monster/',
   'https://alina-pr-mesto.nomoredomains.monster/',
-  'http://158.160.50.231',
-  'https://158.160.50.231',
+  'http://51.250.106.186',
+  'https://51.250.106.186',
   'https://praktikum.tk',
   'http://praktikum.tk',
   'localhost:3000',
@@ -17,6 +19,7 @@ module.exports = (req, res, next) => {
 
   if (allowedCors.includes(origin)) {
     res.header('Access-Control-Allow-Origin', origin);
+    res.header('Access-Control-Allow-Credentials', true);
   }
   if (method === 'OPTIONS') {
     res.header('Access-Control-Allow-Methods', allowedMethods);
