@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const NotFoundError = require('../errors/NotFoundError');
 
-const { SECRET_JWT_KEY } = process.env;
+const { SECRET_JWT_KEY = 'SECRET_JWT_KEY' } = process.env;
 
 module.exports.getUsers = (req, res, next) => {
   User.find({})
