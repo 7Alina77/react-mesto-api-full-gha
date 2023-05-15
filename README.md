@@ -8,8 +8,8 @@
 
 ## Ссылки на проект
 
-IP-адрес x.x.x.x
+IP-адрес 51.250.106.186
 
-Frontend https://...
+Frontend https://alina-pr-mesto.nomoredomains.monster/
 
-Backend https://...
+Backend https://api.alina-pr-mesto.nomoredomains.monster/
