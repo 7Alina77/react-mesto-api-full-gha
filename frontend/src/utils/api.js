@@ -100,5 +100,5 @@ class Api {
   }
 };
 
-export const api = new Api({ BASE_URL })
+export const api = new Api({ BASE_URL });
 //export const api = new Api('https://mesto.nomoreparties.co/v1/cohort-59','96da67be-193e-4896-a588-48f1d36951e6');
