@@ -7,13 +7,20 @@ const User = require('../models/user');
 const NotFoundError = require('../errors/NotFoundError');
 const BadRequestError = require('../errors/BadRequestError');
 const ConflictError = require('../errors/ConflictError');
+const UnauthorizedError = require('../errors/UnauthorizedError');
 
 const { SECRET_JWT_KEY = 'SECRET_JWT_KEY' } = process.env;
 
 module.exports.getUsers = (req, res, next) => {
   User.find({})
     .then((users) => res.send(users))
-    .catch(next);
+    .catch((err) => {
+      if (err instanceof UnauthorizedError) {
+        next(new UnauthorizedError('Необходимо авторизоваться'));
+      } else {
+        next(err);
+      }
+    });
 };
 
 module.exports.getMe = (req, res, next) => {
@@ -52,7 +59,7 @@ module.exports.createUser = (req, res, next) => {
     })
       .then((user) => res.status(201).send(user))
       .catch((err) => {
-        if (err instanceof CastError || err instanceof ValidationError) {
+        if (err instanceof ValidationError) {
           next(new BadRequestError('Данные для создания пользователя некорректны'));
         } else if (err.code === 11000) {
           next(new ConflictError('Пользователь с данным email уже существует'));
