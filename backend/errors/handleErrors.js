@@ -3,7 +3,7 @@
 // const { CastError, ValidationError } = mongoose.Error;
 const http2 = require('http2');
 const NotFoundError = require('./NotFoundError');
-const UnauthorizedError = require('./UnauthorizedError');
+// const UnauthorizedError = require('./UnauthorizedError');
 const ForbiddenError = require('./ForbiddenError');
 
 const {
@@ -20,7 +20,7 @@ function handleErrors(err, req, res, next) {
     .send({ message: 'Пользователь с такой почтой уже существует' });
   } */
   if (err instanceof NotFoundError
-    || err instanceof UnauthorizedError
+    // || err instanceof UnauthorizedError
     || err instanceof ForbiddenError) {
     return res.status(err.statusCode).send({ message: err.message });
   }
