@@ -60,7 +60,7 @@ module.exports.createUser = (req, res, next) => {
       .then((user) => res.status(201).send(user))
       .catch((err) => {
         if (err.code === 11000) {
-          next(new ConflictError('Пользователь с данным email уже существует'));
+          throw new ConflictError('Пользователь с данным email уже существует');
         } else if (err instanceof ValidationError) {
           next(new BadRequestError('Данные для создания пользователя некорректны'));
         } else {
