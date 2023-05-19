@@ -1,5 +1,6 @@
 //export const BASE_URL = 'https://auth.nomoreparties.co';
-export const BASE_URL = 'https://api.alina-pr-mesto.nomoredomains.monster';
+//export const BASE_URL = 'https://api.alina-pr-mesto.nomoredomains.monster';
+export const BASE_URL = 'http://localhost:3002';
 
 const checkResponse = response => response.ok ? response.json() : Promise.reject(`${response.status}`);
   
@@ -7,6 +8,7 @@ export const register = (email, password) => {
   return fetch(`${BASE_URL}/signup`, {
     method: 'POST',
     headers: {
+      'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({ email, password}),
@@ -21,6 +23,7 @@ export const authorize = (email, password) => {
   return fetch(`${BASE_URL}/signin`, {
     method: 'POST',
     headers: {
+      'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({ email,password})
