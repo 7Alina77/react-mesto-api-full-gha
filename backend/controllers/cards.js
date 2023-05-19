@@ -1,7 +1,11 @@
+const mongoose = require('mongoose');
 const Card = require('../models/card');
 const NotFoundError = require('../errors/NotFoundError');
 const ForbiddenError = require('../errors/ForbiddenError');
 const { HTTP_STATUS_CREATED } = require('../errors/handleErrors');
+const BadRequestError = require('../errors/BadRequestError');
+
+const { CastError, ValidationError } = mongoose.Error;
 
 module.exports.getCards = (req, res, next) => {
   Card.find({})
@@ -16,7 +20,13 @@ module.exports.createCard = (req, res, next) => {
   Card.create({ name, link, owner: ownerId })
     .then((card) => card.populate('owner'))
     .then((card) => res.status(HTTP_STATUS_CREATED).send(card))
-    .catch(next);
+    .catch((err) => {
+      if (err instanceof CastError || err instanceof ValidationError) {
+        next(new BadRequestError('Данные для создания карточки некорректны'));
+      } else {
+        next(err);
+      }
+    });
 };
 
 module.exports.deleteCard = (req, res, next) => {

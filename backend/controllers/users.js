@@ -1,7 +1,12 @@
+const mongoose = require('mongoose');
+
+const { CastError, ValidationError } = mongoose.Error;
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const NotFoundError = require('../errors/NotFoundError');
+const BadRequestError = require('../errors/BadRequestError');
+const ConflictError = require('../errors/ConflictError');
 
 const { SECRET_JWT_KEY = 'SECRET_JWT_KEY' } = process.env;
 
@@ -46,7 +51,15 @@ module.exports.createUser = (req, res, next) => {
       password: hash,
     })
       .then((user) => res.status(201).send(user))
-      .catch(next));
+      .catch((err) => {
+        if (err instanceof CastError || err instanceof ValidationError) {
+          next(new BadRequestError('Данные для создания пользователя некорректны'));
+        } else if (err.code === 11000) {
+          next(new ConflictError('Пользователь с данным email уже существует'));
+        } else {
+          next(err);
+        }
+      }));
 };
 
 module.exports.updateUser = (req, res, next) => {
@@ -64,7 +77,13 @@ module.exports.updateUser = (req, res, next) => {
         });
       }
     })
-    .catch(next);
+    .catch((err) => {
+      if (err instanceof CastError || err instanceof ValidationError) {
+        next(new BadRequestError('Данные для обновления пользователя некорректны'));
+      } else {
+        next(err);
+      }
+    });
 };
 
 module.exports.updateAvatar = (req, res, next) => {
@@ -82,10 +101,16 @@ module.exports.updateAvatar = (req, res, next) => {
         });
       }
     })
-    .catch(next);
+    .catch((err) => {
+      if (err instanceof CastError || err instanceof ValidationError) {
+        next(new BadRequestError('Данные для обновления аватара пользователя некорректны'));
+      } else {
+        next(err);
+      }
+    });
 };
 
-module.exports.login = (req, res) => {
+module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
   User.findUserByCredentials(email, password)
     .then((user) => {
@@ -97,5 +122,5 @@ module.exports.login = (req, res) => {
       })
         .send({ token });
     })
-    .catch((err) => res.status(401).send({ message: err.message }));
+    .catch(next);
 };
