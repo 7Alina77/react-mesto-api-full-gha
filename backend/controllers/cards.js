@@ -52,12 +52,7 @@ module.exports.likeCard = (req, res, next) => {
     { $addToSet: { likes: req.user.id } },
     { new: true },
   )
-    .then((card) => {
-      if (card) {
-        card.populate(['owner', 'likes']);
-      }
-      return card;
-    })
+    .then((card) => card.populate(['owner', 'likes']))
     .then((card) => {
       if (card) {
         res.send(card);
@@ -74,12 +69,7 @@ module.exports.dislikeCard = (req, res, next) => {
     { $pull: { likes: req.user.id } },
     { new: true },
   )
-    .then((card) => {
-      if (card) {
-        card.populate(['owner', 'likes']);
-      }
-      return card;
-    })
+    .then((card) => card.populate(['owner', 'likes']))
     .then((card) => {
       if (!card) {
         throw new NotFoundError('Такая карточка не найдена');
