@@ -1,5 +1,5 @@
-// export const BASE_URL = 'https://api.alina-pr-mesto.nomoredomains.monster';
-export const BASE_URL = 'http://localhost:3002';
+export const BASE_URL = 'https://api.alina-pr-mesto.nomoredomains.monster';
+// export const BASE_URL = 'http://localhost:3002';
 
 const checkResponse = response => response.ok ? response.json() : Promise.reject(`${response.status}`);
   
