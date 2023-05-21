@@ -60,7 +60,13 @@ module.exports.likeCard = (req, res, next) => {
         throw new NotFoundError('Такая карточка не найдена');
       }
     })
-    .catch(next);
+    .catch((err) => {
+      if (err instanceof CastError) {
+        next(new BadRequestError('Карточки не существует'));
+      } else {
+        next(err);
+      }
+    });
 };
 
 module.exports.dislikeCard = (req, res, next) => {
@@ -77,5 +83,11 @@ module.exports.dislikeCard = (req, res, next) => {
         res.send(card);
       }
     })
-    .catch(next);
+    .catch((err) => {
+      if (err instanceof CastError) {
+        next(new BadRequestError('Карточки не существует'));
+      } else {
+        next(err);
+      }
+    });
 };

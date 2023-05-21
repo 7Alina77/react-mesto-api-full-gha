@@ -131,7 +131,7 @@ module.exports.login = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'UnauthorizedError') {
         next(new UnauthorizedError('Необходимо авторизоваться'));
-      }
+      } else
       next(err);
     });
 };
