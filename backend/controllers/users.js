@@ -13,12 +13,7 @@ const { SECRET_JWT_KEY = 'SECRET_JWT_KEY' } = process.env;
 
 module.exports.getUsers = (req, res, next) => {
   User.find({})
-    .then((users) => {
-      if (!users) {
-        throw new UnauthorizedError('Необходимо авторизоваться');
-      }
-      return res.send(users);
-    })
+    .then((users) => res.send(users))
     .catch(next);
 };
 
@@ -131,7 +126,7 @@ module.exports.login = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'UnauthorizedError') {
         next(new UnauthorizedError('Необходимо авторизоваться'));
-      } else
+      }
       next(err);
     });
 };
