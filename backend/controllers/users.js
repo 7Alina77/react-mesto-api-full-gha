@@ -13,14 +13,13 @@ const { SECRET_JWT_KEY = 'SECRET_JWT_KEY' } = process.env;
 
 module.exports.getUsers = (req, res, next) => {
   User.find({})
-    .then((users) => res.send(users))
-    .catch((err) => {
-      if (err instanceof UnauthorizedError) {
-        next(new UnauthorizedError('Необходимо авторизоваться'));
-      } else {
-        next(err);
+    .then((users) => {
+      if (!users) {
+        throw new UnauthorizedError('Необходимо авторизоваться');
       }
-    });
+      return res.send(users);
+    })
+    .catch(next);
 };
 
 module.exports.getMe = (req, res, next) => {
@@ -61,7 +60,7 @@ module.exports.createUser = (req, res, next) => {
       .catch((err) => {
         if (err.code === 11000) {
           next(new ConflictError('Пользователь с данным email уже существует'));
-        } else if (err instanceof ValidationError) {
+        } else if (err.name === ValidationError) {
           next(new BadRequestError('Данные для создания пользователя некорректны'));
         } else {
           next(err);
@@ -129,5 +128,10 @@ module.exports.login = (req, res, next) => {
       })
         .send({ token });
     })
-    .catch(next);
+    .catch((err) => {
+      if (err.name === 'UnauthorizedError') {
+        next(new UnauthorizedError('Необходимо авторизоваться'));
+      }
+      next(err);
+    });
 };
