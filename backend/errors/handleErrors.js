@@ -2,9 +2,9 @@
 
 // const { CastError, ValidationError } = mongoose.Error;
 const http2 = require('http2');
-const NotFoundError = require('./NotFoundError');
+// const NotFoundError = require('./NotFoundError');
 // const UnauthorizedError = require('./UnauthorizedError');
-const ForbiddenError = require('./ForbiddenError');
+// const ForbiddenError = require('./ForbiddenError');
 
 const {
   HTTP_STATUS_CREATED,
@@ -19,15 +19,17 @@ function handleErrors(err, req, res, next) {
     return res.status(HTTP_STATUS_CONFLICT)
     .send({ message: 'Пользователь с такой почтой уже существует' });
   } */
-  if (err instanceof NotFoundError
+  /* if (err instanceof NotFoundError
     // || err instanceof UnauthorizedError
     || err instanceof ForbiddenError) {
     return res.status(err.statusCode).send({ message: err.message });
-  }
+  } */
   /** if (err instanceof CastError || err instanceof ValidationError) {
     return res.status(HTTP_STATUS_BAD_REQUEST).send({ message: 'Некорректные данные' });
   } */
-  res.status(HTTP_STATUS_INTERNAL_SERVER_ERROR).send({ message: 'Ошибка сервера' });
+  if (err.statusCode || err.message) {
+    res.status(HTTP_STATUS_INTERNAL_SERVER_ERROR).send({ message: 'Ошибка сервера' });
+  }
   return next();
 }
 
