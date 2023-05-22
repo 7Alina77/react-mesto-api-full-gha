@@ -4,10 +4,10 @@ const { SECRET_JWT_KEY = 'SECRET_JWT_KEY' } = process.env;
 const UnauthorizedError = require('../errors/UnauthorizedError');
 
 module.exports = (req, res, next) => {
-  const token = req.headers.authorization.replace('Bearer ', '') || req.cookies.jwt;
-  if (!token) {
+  if (req.headers.authorization === undefined) {
     return next(new UnauthorizedError('Авторизуйтесь'));
   }
+  const token = req.headers.authorization.replace('Bearer ', '');// || req.cookies.jwt;
   let payload;
   try {
     payload = jwt.verify(token, SECRET_JWT_KEY);

@@ -54,10 +54,10 @@ module.exports.likeCard = (req, res, next) => {
   )
     .then((card) => card.populate(['owner', 'likes']))
     .then((card) => {
-      if (card) {
-        res.send(card);
-      } else {
+      if (!card) {
         throw new NotFoundError('Такая карточка не найдена');
+      } else {
+        res.send(card);
       }
     })
     .catch((err) => {
